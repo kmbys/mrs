@@ -11,7 +11,7 @@ import java.time.LocalDate
 class RoomsController {
 
     @GetMapping
-    fun listRooms(): ModelAndView =
+    fun listRooms() =
         ModelAndView("room/listRooms",
             mapOf(
                 "date" to LocalDate.now(),

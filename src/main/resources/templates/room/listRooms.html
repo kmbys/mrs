@@ -2,17 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>2020/8/30の会議室</title>
+    <title th:text="|${#temporals.format(date, 'yyyy/M/d')}の会議室|">2020/8/30の会議室</title>
 </head>
 <body>
 <h3>会議室</h3>
-<a>&lt; 前日</a>
+<a th:href="@{'/rooms/' + ${date.minusDays(1)}}">&lt; 前日</a>
 <span>2020/8/30の会議室</span>
-<a>翌日 &gt;</a>
+<a th:href="@{'/rooms/' + ${date.plusDays(1)}}">翌日 &gt;</a>
 
 <ul>
     <li>
-        <a></a>
+        <a th:text="${room}"></a>
     </li>
 </ul>
 </body>
