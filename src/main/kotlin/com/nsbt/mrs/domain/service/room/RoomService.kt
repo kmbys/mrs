@@ -1,24 +1,13 @@
 package com.nsbt.mrs.domain.service.room
 
-import com.nsbt.mrs.domain.model.MeetingRoom
-import com.nsbt.mrs.domain.model.ReservableRoom
-import com.nsbt.mrs.domain.model.ReservableRoomId
+import com.nsbt.mrs.domain.repository.room.ReservableRoomRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Service
 @Transactional
-class RoomService {
+class RoomService(private val reservableRoomRepository: ReservableRoomRepository) {
     fun findReservableRooms(date: LocalDate) =
-        listOf(
-            ReservableRoom(
-                ReservableRoomId(1, date),
-                MeetingRoom(1, "札幌")
-            ),
-            ReservableRoom(
-                ReservableRoomId(1, date),
-                MeetingRoom(2, "小樽")
-            )
-        )
+        reservableRoomRepository.findByReservableRoomId_reservedDateOrderByReservableRoomId_roomIdAsc(date)
 }

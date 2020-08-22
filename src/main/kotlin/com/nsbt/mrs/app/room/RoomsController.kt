@@ -1,8 +1,5 @@
 package com.nsbt.mrs.app.room
 
-import com.nsbt.mrs.domain.model.ReservableRoom
-import com.nsbt.mrs.domain.model.ReservableRoomId
-import com.nsbt.mrs.domain.model.MeetingRoom
 import com.nsbt.mrs.domain.service.room.RoomService
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.stereotype.Controller
