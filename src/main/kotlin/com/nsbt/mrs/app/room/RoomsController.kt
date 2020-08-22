@@ -4,8 +4,10 @@ import com.nsbt.mrs.domain.model.ReservableRoom
 import com.nsbt.mrs.domain.model.ReservableRoomId
 import com.nsbt.mrs.domain.model.MeetingRoom
 import com.nsbt.mrs.domain.service.room.RoomService
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.ModelAndView
 import java.time.LocalDate
@@ -15,12 +17,15 @@ import java.time.LocalDate
 class RoomsController(private val roomService: RoomService) {
 
     @GetMapping
-    fun listRooms() =
+    fun listRooms() = listRooms(LocalDate.now())
+
+    @GetMapping("{date}")
+    fun listRooms(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable date: LocalDate) =
         ModelAndView(
             "room/listRooms",
             mapOf(
-                "date" to LocalDate.now(),
-                "rooms" to roomService.findReservableRooms(LocalDate.now())
+                "date" to date,
+                "rooms" to roomService.findReservableRooms(date)
             )
         )
 }
