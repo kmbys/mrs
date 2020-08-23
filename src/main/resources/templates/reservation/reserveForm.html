@@ -15,7 +15,7 @@
 <form>
     会議室：<span>札幌</span>
     <br>
-    予約者名：<span>山田 太郎</span>
+    予約者名：<span th:text="${user.lastName + ' ' + user.firstName}">山田 次郎</span>
     <br>
     日付：<span>2020/8/30</span>
     <br>
