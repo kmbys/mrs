@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>2020/8/30の札幌</title>
+</head>
+<body>
+
+<div>
+    <a>会議室一覧へ</a>
+</div>
+
+</body>
+
+<form>
+    会議室：<span>札幌</span>
+    <br>
+    予約者名：<span>山田 太郎</span>
+    <br>
+    日付：<span>2020/8/30</span>
+    <br>
+    時間帯：
+    <select>
+        <option>09:00</option>
+    </select>
+    <span>error!</span>
+    -
+    <select>
+        <option>10:00</option>
+    </select>
+    <span>error!</span>
+    <br>
+    <button>予約</button>
+</form>
+
+<table>
+    <tr>
+        <th>時間帯</th>
+        <th>予約者</th>
+        <th>操作</th>
+    </tr>
+    <tr>
+        <td>
+            <span></span>
+            -
+            <span></span>
+        </td>
+        <td>
+            <span></span>
+            <span></span>
+        </td>
+        <td>
+            <form>
+                <input type="hidden" name="reservationId">
+                <input type="submit" name="cancel" value="取消">
+            </form>
+        </td>
+    </tr>
+</table>
+
+</html>
