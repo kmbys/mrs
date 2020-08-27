@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>2020/8/30の札幌</title>
+    <title th:text="|2020/8/30の${room.roomName}|">2020/8/30の札幌</title>
 </head>
 <body>
 
@@ -13,7 +13,7 @@
 </body>
 
 <form>
-    会議室：<span>札幌</span>
+    会議室：<span th:text="${room.roomName}">札幌</span>
     <br>
     予約者名：<span th:text="${user.lastName + ' ' + user.firstName}">山田 次郎</span>
     <br>
