@@ -23,14 +23,8 @@ class ReservationController(private val roomService: RoomService) {
             )
         )
 
-    private fun timeList(): List<LocalTime> {
-        var timeList = ArrayList<LocalTime>()
-        for (i in 0..24 - 1) {
-            timeList.add(LocalTime.of(i, 0))
-            timeList.add(LocalTime.of(i, 30))
-        }
-        return timeList
-    }
+    private fun timeList() =
+        (0 until 24 * 2).map { LocalTime.of(it / 2, it % 2 * 30) }
 
     private fun dummyUser() =
         User(
