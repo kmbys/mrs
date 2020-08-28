@@ -1,6 +1,5 @@
 package com.nsbt.mrs.app.reservation
 
-import com.nsbt.mrs.domain.model.MeetingRoom
 import com.nsbt.mrs.domain.model.RoleName
 import com.nsbt.mrs.domain.model.User
 import com.nsbt.mrs.domain.service.room.RoomService
@@ -20,8 +19,7 @@ class ReservationController(private val roomService: RoomService) {
         ModelAndView(
             "reservation/reserveForm",
             mapOf(
-//                "room" to roomService.findMeetingRoom(roomId),
-                "room" to MeetingRoom(2, "旭川"),
+                "room" to roomService.findMeetingRoom(roomId),
                 "timeList" to timeList(),
                 "user" to dummyUser()
             )
