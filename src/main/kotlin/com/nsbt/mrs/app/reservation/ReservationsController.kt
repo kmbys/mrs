@@ -12,7 +12,7 @@ import java.time.LocalTime
 
 @Controller
 @RequestMapping("reservations/{date}/{roomId}")
-class ReservationController(private val roomService: RoomService) {
+class ReservationsController(private val roomService: RoomService) {
 
     @GetMapping
     fun reserveForm(@PathVariable roomId: Int) =
