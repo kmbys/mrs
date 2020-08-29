@@ -1,6 +1,7 @@
 package com.nsbt.mrs.app.reservation
 
 import com.nsbt.mrs.domain.model.*
+import com.nsbt.mrs.domain.service.reservation.ReservationService
 import com.nsbt.mrs.domain.service.room.RoomService
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.stereotype.Controller
@@ -13,7 +14,10 @@ import java.time.LocalTime
 
 @Controller
 @RequestMapping("reservations/{date}/{roomId}")
-class ReservationsController(private val roomService: RoomService) {
+class ReservationsController(
+    private val roomService: RoomService,
+    private val reservationService: ReservationService
+) {
 
     @GetMapping
     fun reserveForm(
@@ -26,52 +30,7 @@ class ReservationsController(private val roomService: RoomService) {
                 "date" to date,
                 "roomId" to roomId,
                 "room" to roomService.findMeetingRoom(roomId),
-                "reservations" to listOf(
-                    Reservation(
-                        1,
-                        LocalTime.of(13, 0),
-                        LocalTime.of(14, 0),
-                        ReservableRoom(
-                            ReservableRoomId(
-                                1,
-                                LocalDate.now()
-                            ),
-                            MeetingRoom(
-                                1,
-                                "札幌"
-                            )
-                        ),
-                        User(
-                            "saburo-yamada",
-                            null,
-                            "三郎",
-                            "山田",
-                            RoleName.USER
-                        )
-                    ),
-                    Reservation(
-                        2,
-                        LocalTime.of(14, 0),
-                        LocalTime.of(15, 0),
-                        ReservableRoom(
-                            ReservableRoomId(
-                                1,
-                                LocalDate.now()
-                            ),
-                            MeetingRoom(
-                                1,
-                                "札幌"
-                            )
-                        ),
-                        User(
-                            "taro-yamada",
-                            null,
-                            "太郎",
-                            "山田",
-                            RoleName.USER
-                        )
-                    )
-                ),
+                "reservations" to reservationService.findReservations(ReservableRoomId(roomId, date)),
                 "timeList" to timeList(),
                 "user" to dummyUser()
             )
