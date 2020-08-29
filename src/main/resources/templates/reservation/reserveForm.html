@@ -39,18 +39,19 @@
         <th>予約者</th>
         <th>操作</th>
     </tr>
-    <tr>
+    <tr th:each="reservation : ${reservations}">
         <td>
-            <span></span>
+            <span th:text="${reservation.startTime}"></span>
             -
-            <span></span>
+            <span th:text="${reservation.endTime}"></span>
         </td>
         <td>
-            <span></span>
-            <span></span>
+            <span th:text="${reservation.user.lastName}"></span>
+            <span th:text="${reservation.user.firstName}"></span>
         </td>
         <td>
-            <form>
+            <form th:action="@{'/reservations/' + ${date} + '/' +${roomId}}" method="post"
+                  th:if="${user.userId == reservation.user.userId}">
                 <input type="hidden" name="reservationId">
                 <input type="submit" name="cancel" value="取消">
             </form>
