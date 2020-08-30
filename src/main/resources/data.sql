@@ -28,8 +28,8 @@ INSERT INTO reservable_room (reserved_date, room_id) VALUES (CURRENT_DATE + 1, 5
 INSERT INTO reservable_room (reserved_date, room_id) VALUES (CURRENT_DATE + 1, 6);
 INSERT INTO reservable_room (reserved_date, room_id) VALUES (CURRENT_DATE + 1, 7);
 
-INSERT INTO usr (user_id, first_name, last_name, password, rome_name) VALUES ('taro-yamada', '太郎', '山田', 'aaa', 'USER');
-INSERT INTO usr (user_id, first_name, last_name, password, rome_name) VALUES ('jiro-yamada', '次郎', '山田', 'bbb', 'USER');
+INSERT INTO usr (user_id, first_name, last_name, password, role_name) VALUES ('taro-yamada', '太郎', '山田', 'aaa', 'USER');
+INSERT INTO usr (user_id, first_name, last_name, password, role_name) VALUES ('jiro-yamada', '次郎', '山田', 'bbb', 'USER');
 
 INSERT INTO reservation (start_time, end_time, reserved_date, room_id, user_id) VALUES ('13:00', '14:00', CURRENT_DATE, '1', 'taro-yamada');
 INSERT INTO reservation (start_time, end_time, reserved_date, room_id, user_id) VALUES ('14:00', '15:00', CURRENT_DATE, '2', 'jiro-yamada');

@@ -16,7 +16,7 @@ CREATE TABLE usr (
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    rome_name VARCHAR(255) NOT NULL,
+    role_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (user_id)
 );
 
