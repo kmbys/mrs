@@ -9,7 +9,7 @@ data class Reservation(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val reservationId: Int,
+    val reservationId: Int?,
 
     val startTime: LocalTime,
 

@@ -12,7 +12,7 @@
 
 </body>
 
-<form>
+<form th:action="@{'/reservations/' + ${date} + '/' +${roomId}}" method="post">
     会議室：<span th:text="${room.roomName}">札幌</span>
     <br>
     予約者名：<span th:text="${user.lastName + ' ' + user.firstName}">山田 次郎</span>

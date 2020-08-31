@@ -10,4 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 class ReservationService(private val reservationRepository: ReservationRepository) {
     fun findReservations(reservableRoomId: ReservableRoomId) =
         reservationRepository.findByReservableRoom_ReservableRoomIdOrderByStartTimeAsc(reservableRoomId)
+
+    fun reserve(reservation: Reservation) =
+        reservationRepository.save(reservation)
 }

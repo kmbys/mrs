@@ -42,8 +42,25 @@ class ReservationsController(
     fun reserve(
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable date: LocalDate,
         @PathVariable roomId: Int
-    ) =
-        ModelAndView("redirect:/reservations/{date}/{roomId}")
+    ): ModelAndView {
+
+        val reservation = Reservation(
+            null,
+            LocalTime.of(9, 0),
+            LocalTime.of(10, 0),
+            ReservableRoom(
+                ReservableRoomId(
+                    roomId,
+                    LocalDate.now()
+                ),
+                roomService.findMeetingRoom(roomId)
+            ),
+            dummyUser()
+        )
+        reservationService.reserve(reservation)
+
+        return ModelAndView("redirect:/reservations/{date}/{roomId}")
+    }
 
     private fun timeList() =
         (0 until 24 * 2).map { LocalTime.of(it / 2, it % 2 * 30) }
