@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="|2020/8/30の${room.roomName}|">2020/8/30の札幌</title>
+    <title th:text="|${#temporals.format(date, 'yyyy/M/d')}の${room.roomName}|">2020/8/30の札幌</title>
 </head>
 <body>
 
@@ -16,7 +16,7 @@
     <br>
     予約者名：<span th:text="${user.lastName + ' ' + user.firstName}">山田 次郎</span>
     <br>
-    日付：<span>2020/8/30</span>
+    日付：<span th:text="${#temporals.format(date, 'yyyy/M/d')}">2020/8/30</span>
     <br>
     時間帯：
     <select th:field="*{startTime}">
