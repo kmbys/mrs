@@ -10,9 +10,8 @@
     <a>会議室一覧へ</a>
 </div>
 
-</body>
-
-<form th:action="@{'/reservations/' + ${date} + '/' +${roomId}}" method="post">
+<form th:object="${reservationForm}"
+      th:action="@{'/reservations/' + ${date} + '/' +${roomId}}" method="post">
     会議室：<span th:text="${room.roomName}">札幌</span>
     <br>
     予約者名：<span th:text="${user.lastName + ' ' + user.firstName}">山田 次郎</span>
@@ -20,13 +19,13 @@
     日付：<span>2020/8/30</span>
     <br>
     時間帯：
-    <select>
-        <option th:each="time : ${timeList}" th:text="${time}" th:value="${time}">09:00</option>
+    <select th:field="*{startTime}">
+        <option th:each="time : ${timeList}" th:text="${time}" th:value="${time}">13:00</option>
     </select>
     <span>error!</span>
     -
-    <select>
-        <option th:each="time : ${timeList}" th:text="${time}" th:value="${time}">10:00</option>
+    <select th:field="*{endTime}">
+        <option th:each="time : ${timeList}" th:text="${time}" th:value="${time}">14:00</option>
     </select>
     <span>error!</span>
     <br>
@@ -58,5 +57,7 @@
         </td>
     </tr>
 </table>
+
+</body>
 
 </html>
