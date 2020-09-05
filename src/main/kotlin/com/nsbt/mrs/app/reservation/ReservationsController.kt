@@ -73,6 +73,16 @@ class ReservationsController(
         return ModelAndView("redirect:/reservations/{date}/{roomId}")
     }
 
+    @PostMapping(params = ["cancel"])
+    fun cancel(
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable date: LocalDate,
+        @PathVariable roomId: Int,
+        @RequestParam reservationId: Int
+    ): ModelAndView {
+        reservationService.cancel(reservationId, dummyUser())
+        return ModelAndView("redirect:/reservations/{date}/{roomId}")
+    }
+
     private fun timeList() =
         (0 until 24 * 2).map { LocalTime.of(it / 2, it % 2 * 30) }
 
@@ -84,4 +94,5 @@ class ReservationsController(
             "山田",
             RoleName.USER
         )
+
 }

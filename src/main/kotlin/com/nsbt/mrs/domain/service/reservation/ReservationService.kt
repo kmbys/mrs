@@ -13,4 +13,7 @@ class ReservationService(private val reservationRepository: ReservationRepositor
 
     fun reserve(reservation: Reservation) =
         reservationRepository.save(reservation)
+
+    fun cancel(reservationId: Int, requestUser: User) =
+        reservationRepository.delete(reservationRepository.findById(reservationId).get())
 }
