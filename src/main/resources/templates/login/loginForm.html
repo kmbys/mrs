@@ -8,9 +8,11 @@
 
 <h3>ログインフォーム</h3>
 
-<p></p>
+<p th:if="${param.error}">
+    Error!
+</p>
 
-<form>
+<form th:action="@{/login}" method="post">
     <table>
         <tr>
             <td><label for="username">User:</label></td>
