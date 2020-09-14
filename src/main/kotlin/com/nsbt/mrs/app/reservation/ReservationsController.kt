@@ -3,7 +3,9 @@ package com.nsbt.mrs.app.reservation
 import com.nsbt.mrs.domain.model.*
 import com.nsbt.mrs.domain.service.reservation.ReservationService
 import com.nsbt.mrs.domain.service.room.RoomService
+import com.nsbt.mrs.domain.service.user.ReservationUserDetails
 import org.springframework.format.annotation.DateTimeFormat
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
@@ -28,6 +30,7 @@ class ReservationsController(
 
     @GetMapping
     fun reserveForm(
+        @AuthenticationPrincipal reservationUserDetails: ReservationUserDetails,
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable date: LocalDate,
         @PathVariable roomId: Int
     ) =
@@ -39,7 +42,7 @@ class ReservationsController(
                 "room" to roomService.findMeetingRoom(roomId),
                 "reservations" to reservationService.findReservations(ReservableRoomId(roomId, date)),
                 "timeList" to timeList(),
-                "user" to dummyUser()
+                "user" to reservationUserDetails.user
             )
         )
 
@@ -47,12 +50,13 @@ class ReservationsController(
     fun reserve(
         @Validated form: ReservationForm,
         bindingResult: BindingResult,
+        @AuthenticationPrincipal reservationUserDetails: ReservationUserDetails,
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable date: LocalDate,
         @PathVariable roomId: Int
     ): ModelAndView {
 
         if (bindingResult.hasErrors()) {
-            return reserveForm(date, roomId)
+            return reserveForm(reservationUserDetails, date, roomId)
         }
 
         val reservation = Reservation(
@@ -66,7 +70,7 @@ class ReservationsController(
                 ),
                 roomService.findMeetingRoom(roomId)
             ),
-            dummyUser()
+            reservationUserDetails.user
         )
         reservationService.reserve(reservation)
 
@@ -75,24 +79,16 @@ class ReservationsController(
 
     @PostMapping(params = ["cancel"])
     fun cancel(
+        @AuthenticationPrincipal reservationUserDetails: ReservationUserDetails,
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable date: LocalDate,
         @PathVariable roomId: Int,
         @RequestParam reservationId: Int
     ): ModelAndView {
-        reservationService.cancel(reservationId, dummyUser())
+        reservationService.cancel(reservationId, reservationUserDetails.user)
         return ModelAndView("redirect:/reservations/{date}/{roomId}")
     }
 
     private fun timeList() =
         (0 until 24 * 2).map { LocalTime.of(it / 2, it % 2 * 30) }
-
-    private fun dummyUser() =
-        User(
-            "taro-yamada",
-            null,
-            "太郎",
-            "山田",
-            RoleName.USER
-        )
 
 }
