@@ -30,7 +30,6 @@ class ReservationsController(
 
     @GetMapping
     fun reserveForm(
-        @AuthenticationPrincipal reservationUserDetails: ReservationUserDetails,
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable date: LocalDate,
         @PathVariable roomId: Int
     ) =
@@ -41,8 +40,7 @@ class ReservationsController(
                 "roomId" to roomId,
                 "room" to roomService.findMeetingRoom(roomId),
                 "reservations" to reservationService.findReservations(ReservableRoomId(roomId, date)),
-                "timeList" to timeList(),
-                "user" to reservationUserDetails.user
+                "timeList" to timeList()
             )
         )
 
@@ -56,7 +54,7 @@ class ReservationsController(
     ): ModelAndView {
 
         if (bindingResult.hasErrors()) {
-            return reserveForm(reservationUserDetails, date, roomId)
+            return reserveForm(date, roomId)
         }
 
         val reservation = Reservation(
