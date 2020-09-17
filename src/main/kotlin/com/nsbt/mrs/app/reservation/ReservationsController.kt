@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
-import java.lang.RuntimeException
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -46,9 +45,6 @@ class ReservationsController(
             )
         )
 
-    fun reserveForm(date: LocalDate, roomId: Int, exception: RuntimeException) =
-        reserveForm(date, roomId).addObject("error", exception.message)
-
     @PostMapping
     fun reserve(
         @Validated form: ReservationForm,
@@ -78,7 +74,7 @@ class ReservationsController(
         try {
             reservationService.reserve(reservation)
         } catch (e: UnavailableReservationException) {
-            return reserveForm(date, roomId, e)
+            return reserveForm(date, roomId).addObject("error", e.message)
         }
 
         return ModelAndView("redirect:/reservations/{date}/{roomId}")
