@@ -2,6 +2,7 @@ package com.nsbt.mrs.app.reservation
 
 import com.nsbt.mrs.domain.model.*
 import com.nsbt.mrs.domain.service.reservation.ReservationService
+import com.nsbt.mrs.domain.service.reservation.UnavailableReservationException
 import com.nsbt.mrs.domain.service.room.RoomService
 import com.nsbt.mrs.domain.service.user.ReservationUserDetails
 import org.springframework.format.annotation.DateTimeFormat
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
+import java.lang.RuntimeException
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -44,6 +46,9 @@ class ReservationsController(
             )
         )
 
+    fun reserveForm(date: LocalDate, roomId: Int, exception: RuntimeException) =
+        reserveForm(date, roomId).addObject("error", exception.message)
+
     @PostMapping
     fun reserve(
         @Validated form: ReservationForm,
@@ -70,7 +75,11 @@ class ReservationsController(
             ),
             reservationUserDetails.user
         )
-        reservationService.reserve(reservation)
+        try {
+            reservationService.reserve(reservation)
+        } catch (e: UnavailableReservationException) {
+            return reserveForm(date, roomId, e)
+        }
 
         return ModelAndView("redirect:/reservations/{date}/{roomId}")
     }
