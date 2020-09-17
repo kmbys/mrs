@@ -64,7 +64,7 @@ class ReservationsController(
             ReservableRoom(
                 ReservableRoomId(
                     roomId,
-                    LocalDate.now()
+                    date
                 ),
                 roomService.findMeetingRoom(roomId)
             ),
